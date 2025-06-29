@@ -1,0 +1,19 @@
+{
+  "name": "k6_laravel_octane",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "description": "",
+  "devDependencies": {
+    "@types/k6": "^1.0.2"
+  },
+  "dependencies": {
+    "k6": "^0.0.0"
+  }
+}
