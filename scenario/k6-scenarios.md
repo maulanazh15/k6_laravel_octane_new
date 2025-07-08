@@ -2,17 +2,17 @@
 ### Nginx PHP-FPM
 #### Get Login
 ```bash
-k6-dashboard run -e SCENARIO=smoke -e HOST=https://jelitaspmi.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/smoke-login.csv --out dashboard=export=reports/nginx-phpfpm/html/smoke-login.html scenario/main.ts
+k6-dashboard run -e SCENARIO=smoke -e HOST=https://phpfpm.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/smoke-login.csv --out dashboard=export=reports/nginx-phpfpm/html/smoke-login.html scenario/main.ts
 ```
 
 #### Get Index Universitas
 ```bash
-k6-dashboard run -e SCENARIO=smoke -e HOST=https://jelitaspmi.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/smoke-index-universitas.csv --out dashboard=export=reports/nginx-phpfpm/html/smoke-index-universitas.html scenario/get-index-universitas.ts
+k6-dashboard run -e SCENARIO=smoke -e HOST=https://phpfpm.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/smoke-index-universitas.csv --out dashboard=export=reports/nginx-phpfpm/html/smoke-index-universitas.html scenario/get-index-universitas.ts
 ```
 
 #### Post Kelompok Standar
 ```bash
-k6-dashboard run -e SCENARIO=smoke -e HOST=https://jelitaspmi.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/smoke-post-kelompok-standar.csv --out dashboard=export=reports/nginx-phpfpm/html/smoke-post-kelompok-standar.html scenario/post-kelompok-standar.ts
+k6-dashboard run -e SCENARIO=smoke -e HOST=https://phpfpm.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/smoke-post-kelompok-standar.csv --out dashboard=export=reports/nginx-phpfpm/html/smoke-post-kelompok-standar.html scenario/post-kelompok-standar.ts
 ```
 
 ### Octane FrankenPHP
@@ -29,7 +29,7 @@ k6-dashboard run -e SCENARIO=smoke -e HOST=https://openswoole.homelabchester.my.
 ## Average Testing
 ### Nginx PHP-FPM
 ```bash
-k6-dashboard run -e SCENARIO=average -e HOST=https://jelitaspmi.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/average-login.csv --out dashboard=export=reports/nginx-phpfpm/html/average-login.html scenario/main.ts
+k6-dashboard run -e SCENARIO=average -e HOST=https://phpfpm.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/average-login.csv --out dashboard=export=reports/nginx-phpfpm/html/average-login.html scenario/main.ts
 ```
 
 ### Octane FrankenPHP
@@ -45,7 +45,7 @@ k6-dashboard run -e SCENARIO=average -e HOST=https://openswoole.homelabchester.m
 ## Stress Testing
 ### Nginx PHP-FPM
 ```bash
-k6-dashboard run -e SCENARIO=stress -e HOST=https://jelitaspmi.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/stress-login.csv --out dashboard=export=reports/nginx-phpfpm/html/stress-login.html scenario/main.ts
+k6-dashboard run -e SCENARIO=stress -e HOST=https://phpfpm.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/stress-login.csv --out dashboard=export=reports/nginx-phpfpm/html/stress-login.html scenario/main.ts
 ```
 
 ### Octane FrankenPHP
@@ -61,7 +61,7 @@ k6-dashboard run -e SCENARIO=stress -e HOST=https://openswoole.homelabchester.my
 ## Soak Testing
 ### Nginx PHP-FPM
 ```bash
-k6-dashboard run -e SCENARIO=soak -e HOST=https://jelitaspmi.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/soak-login.csv --out dashboard=export=reports/nginx-phpfpm/html/soak-login.html scenario/main.ts
+k6-dashboard run -e SCENARIO=soak -e HOST=https://phpfpm.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/soak-login.csv --out dashboard=export=reports/nginx-phpfpm/html/soak-login.html scenario/main.ts
 ```
 
 ### Octane FrankenPHP
@@ -77,7 +77,7 @@ k6-dashboard run -e SCENARIO=soak -e HOST=https://openswoole.homelabchester.my.i
 ## Spike Testing
 ### Nginx PHP-FPM
 ```bash
-k6-dashboard run -e SCENARIO=spike -e HOST=https://jelitaspmi.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/spike-login.csv --out dashboard=export=reports/nginx-phpfpm/html/spike-login.html scenario/main.ts
+k6-dashboard run -e SCENARIO=spike -e HOST=https://phpfpm.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/spike-login.csv --out dashboard=export=reports/nginx-phpfpm/html/spike-login.html scenario/main.ts
 ```
 
 ### Octane FrankenPHP
@@ -93,7 +93,7 @@ k6-dashboard run -e SCENARIO=spike -e HOST=https://openswoole.homelabchester.my.
 ## Breakpoint Testing
 ### Nginx PHP-FPM
 ```bash
-k6-dashboard run -e SCENARIO=breakpoint -e HOST=https://jelitaspmi.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/breakpoint-login.csv --out dashboard=export=reports/nginx-phpfpm/html/breakpoint-login.html scenario/main.ts
+k6-dashboard run -e SCENARIO=breakpoint -e HOST=https://phpfpm.homelabchester.my.id --out csv=reports/nginx-phpfpm/csv/breakpoint-login.csv --out dashboard=export=reports/nginx-phpfpm/html/breakpoint-login.html scenario/main.ts
 ```
 
 ### Octane FrankenPHP
