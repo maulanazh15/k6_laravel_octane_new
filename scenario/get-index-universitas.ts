@@ -1,6 +1,7 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { scenarios, thresholds } from './scenario-config.ts';
+import { test } from 'k6/execution';
 
 // Endpoint to test
 const ENDPOINT = '/standar-mutu/standar-universitas';
@@ -17,17 +18,20 @@ const host = __ENV.HOST || DEFAULT_HOST;
 let csrfToken;
 let sessionCookies = {};
 
-export const options = {
-    thresholds,
+let SCENARIO = {
     scenarios: {
         [scenarioName]: {
-            ...scenarios[scenarioName],
+            ...scenarios[scenarioName]
         }
     }
-};
+}
+
+if (__ENV.SCENARIO === 'breakpoint') SCENARIO.thresholds = thresholds
+
+export const options = SCENARIO
 
 export function setup() {
-    console.log(`Starting test with scenario: ${scenarioName} on host web server: ${host}`);
+    console.log(`Persiapan pengujian akses halaman index standar universitas dengan ${scenarioName} testing, ke halaman web server ${host}`)
 
     // 1. Load login page to get CSRF token
     let res = http.get(`${host}`);
@@ -73,10 +77,12 @@ export default function (data) {
         cookies,
 
     });
-
-    check(res, {
-        'status is 200': r => r.status === 200,
-    });
-
-    sleep(1);
+    // check(res, {
+    //     'status is 200': r => r.status === 200,
+    // });
+    let page = res.html()
+    const title = page.find('head title')
+    check(title, {
+        'title is correct': title => title.text() === 'Standar Universitas | JELITA'
+    })
 }

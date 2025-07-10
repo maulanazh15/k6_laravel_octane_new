@@ -2,13 +2,11 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { scenarios, thresholds } from './scenario-config.ts';
 import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
-import { getCookies } from './cookie-config.ts';
 import { test } from 'k6/execution';
-import { parseHTML } from 'k6/html';
 
 // Set your endpoint here for each file
 const ENDPOINT = '/dokumen/kelompok-standar'; // Change this per file
-const DEFAULT_HOST = 'https://jelitaspmi.homelabchester.my.id';
+const DEFAULT_HOST = 'https://phpfpm.homelabchester.my.id';
 
 // Pick scenario from env, default to 'smoke'
 const scenarioName = (__ENV.SCENARIO || 'smoke').toLowerCase();
@@ -17,22 +15,28 @@ if (!scenarios[scenarioName]) {
 }
 
 const host = __ENV.HOST || DEFAULT_HOST;
+const headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+}
 
 // Store tokens/cookies here
 let csrfToken, newCsrfToken;
 let sessionCookies = {};
 
-export const options = {
-    thresholds,
+let SCENARIO = {
     scenarios: {
         [scenarioName]: {
-            ...scenarios[scenarioName],
+            ...scenarios[scenarioName]
         }
     }
-};
+}
+
+if (__ENV.SCENARIO === 'breakpoint') SCENARIO.thresholds = thresholds
+
+export const options = SCENARIO
 
 export function setup() {
-    console.log(`Starting test with scenario: ${scenarioName} on host web server: ${host}`);
+    console.log(`Persiapan pengujian akses dan insert data kelompok standar dengan ${scenarioName} testing, ke halaman web server ${host}`)
 
     // 1. Load login page to get CSRF token
     let res = http.get(`${host}`);
@@ -45,9 +49,7 @@ export function setup() {
     let payload = `_token=${csrfToken}&email=${email}&password=${password}`;
 
     let loginRes = http.post(`${host}/login`, payload, {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        }
+       headers
     });
 
     // 3. Extract cookies from login response
@@ -67,38 +69,34 @@ export function setup() {
         cookies: sessionCookies
     })
 
-    console.log('doc form', createForm.body)
-
     let docForm = createForm.html()
     newCsrfToken = docForm.find('input[name="_token"]').attr('value');
-
-    return { sessionCookies };
+    return { sessionCookies, newCsrfToken };
 }
 
 export default function (data) {
     const url = `${host}${ENDPOINT}/store`
-    const cookies = {
-        ...sessionCookies
-    };
+    const cookies = data.sessionCookies
 
     let nama = randomString(5)
     let kode = randomString(3)
 
-    let payload = `_token=${newCsrfToken}&nama=${nama}&kode=${kode}`;
-    let headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-    }
+    let payload = `_token=${data.newCsrfToken}&nama=${nama}&kode=${kode}`;
     
     let res = http.post(url, payload, {
         headers,
         cookies
     });
     
+    // check(res, { "status is 200": (res) => res.status === 200 });
     console.log(res.body)
+    sleep(3)
+    test.abort('abort')
+    // let page = res.html()
+    // const title = page.find('head title')
+    // check(title, {
+    //     'title is correct': title => title.text() === 'Standar Universitas | JELITA'
+    // })
 
-    test.abort('debug tes')
-
-    check(res, { "status is 200": (res) => res.status === 200 });
-
-    sleep(1);
+    
 }

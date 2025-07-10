@@ -43,7 +43,7 @@ export const scenarios = {
     spike: {
         executor: 'ramping-vus',
         stages: [
-            { duration: '7m', target: 900 },
+            { duration: '7m', target: 1000 },
             { duration: '3m', target: 0 },
         ],
     },
