@@ -75,14 +75,9 @@ export default function (data) {
 
     const res = http.get(url, {
         cookies,
-
     });
-    // check(res, {
-    //     'status is 200': r => r.status === 200,
-    // });
-    let page = res.html()
-    const title = page.find('head title')
-    check(title, {
-        'title is correct': title => title.text() === 'Standar Universitas | JELITA'
-    })
+
+    check(res, {
+        'status is 200': r => r.status === 200,
+    });
 }

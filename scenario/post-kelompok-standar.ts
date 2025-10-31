@@ -2,7 +2,6 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { scenarios, thresholds } from './scenario-config.ts';
 import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
-import { test } from 'k6/execution';
 
 // Set your endpoint here for each file
 const ENDPOINT = '/dokumen/kelompok-standar'; // Change this per file
@@ -79,24 +78,18 @@ export default function (data) {
     const cookies = data.sessionCookies
 
     let nama = randomString(5)
-    let kode = randomString(3)
+    let kode = randomString(6)
 
     let payload = `_token=${data.newCsrfToken}&nama=${nama}&kode=${kode}`;
     
     let res = http.post(url, payload, {
         headers,
-        cookies
+        cookies,
+        redirects: 0,
     });
-    
-    // check(res, { "status is 200": (res) => res.status === 200 });
-    console.log(res.body)
-    sleep(3)
-    test.abort('abort')
-    // let page = res.html()
-    // const title = page.find('head title')
-    // check(title, {
-    //     'title is correct': title => title.text() === 'Standar Universitas | JELITA'
-    // })
 
-    
+    check(res, {
+        "POST responded with redirect": (r) => r.status === 302,
+        "Has Location header": (r) => r.headers["Location"] !== undefined,
+      });
 }
